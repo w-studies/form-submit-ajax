@@ -6,30 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Form Ajax Submit</title>
-  <style>
-    input,
-    button,
-    textarea {
-      display: block;
-      padding: 6px;
-      border-radius: 6px;
-      border: thin solid #888;
-      margin: 6px 0;
-    }
-
-    div.messenger {
-      font-family: monospace;
-      white-space: pre;
-    }
-
-    .text-danger {
-      color: red;
-    }
-
-    .text-success {
-      color: green;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -77,15 +54,18 @@
       // se o statusCode da resposta for igual a 200
       if (response.status === 200) {
         const body = await response.json()
-        messenger.classList.add('text-success')
-        messenger.innerHTML = JSON.stringify({ body }, null, 2)
+        showResponse(body)
       } else {
         const error = await response.text()
-        messenger.classList.add('text-danger')
-        messenger.innerHTML = JSON.stringify({ error }, null, 2)
+        showResponse(error, 'text-danger')
       }
 
     })
+
+    const showResponse = (response, className = 'text-success') => {
+      messenger.classList.add(className)
+      messenger.innerHTML = JSON.stringify({ response }, null, 2)
+    }
   </script>
 </body>
 

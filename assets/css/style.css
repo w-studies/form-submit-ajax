@@ -1,0 +1,22 @@
+input,
+button,
+textarea {
+  display: block;
+  padding: 6px;
+  border-radius: 6px;
+  border: thin solid #888;
+  margin: 6px 0;
+}
+
+div.messenger {
+  font-family: monospace;
+  white-space: pre;
+}
+
+.text-danger {
+  color: red;
+}
+
+.text-success {
+  color: green;
+}
