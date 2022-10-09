@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Ajax Submit</title>
+  <style>
+    input,
+    button,
+    textarea {
+      display: block;
+      padding: 6px;
+      border-radius: 6px;
+      border: thin solid #888;
+      margin: 6px 0;
+    }
+
+    div.messenger {
+      font-family: monospace;
+      white-space: pre;
+    }
+
+    .text-danger {
+      color: red;
+    }
+
+    .text-success {
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <form action="api/" method="POST">
+      <div>
+        <label>title</label>
+        <input type="text" name="title" placeholder="title" required>
+      </div>
+      <div>
+        <label>photo</label>
+        <input type="file" name="photo">
+      </div>
+      <div>
+        <label>description</label>
+        <textarea name="description" required cols="30" rows="10"></textarea>
+      </div>
+      <div>
+        <button>submit</button>
+      </div>
+    </form>
+    <div class="messenger"></div>
+  </main>
+
+  <script>
+    // define o form
+    const form = document.querySelector('form');
+
+    const messenger = document.querySelector('div.messenger');
+
+    // escuta o evento submit do form
+    form.addEventListener('submit', async (e) => {
+      // impede o evento default do form
+      e.preventDefault();
+
+      // guarda os dados do form num FormData
+      const fData = new FormData(form);
+
+      // submete os dados via ajax
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: fData
+      });
+
+      // se o statusCode da resposta for igual a 200
+      if (response.status === 200) {
+        const body = await response.json()
+        messenger.classList.add('text-success')
+        messenger.innerHTML = JSON.stringify({ body }, null, 2)
+      } else {
+        const error = await response.text()
+        messenger.classList.add('text-danger')
+        messenger.innerHTML = JSON.stringify({ error }, null, 2)
+      }
+
+    })
+  </script>
+</body>
+
+</html>
