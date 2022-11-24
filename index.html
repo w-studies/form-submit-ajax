@@ -35,6 +35,7 @@
     // define o form
     const form = document.querySelector('form');
 
+    // define elemento que vai exibir mensagens (sucesso, erro, etc...)
     const messenger = document.querySelector('div.messenger');
 
     // escuta o evento submit do form
@@ -53,15 +54,20 @@
 
       // se o statusCode da resposta for igual a 200
       if (response.status === 200) {
+        // trata a resposta como json
         const body = await response.json()
         showResponse(body)
       } else {
+        // trata a resposta como texto
         const error = await response.text()
         showResponse(error, 'text-danger')
       }
 
     })
 
+    /**
+     * Função para exibir mensagens na tela
+     **/
     const showResponse = (response, className = 'text-success') => {
       messenger.classList.add(className)
       messenger.innerHTML = JSON.stringify({ response }, null, 2)
